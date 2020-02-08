@@ -1,10 +1,7 @@
 """
-Given input topo file create mask file with 
-   1 where water could be initially
-   0 where initial data should be dry even if Z < sea_level.
-   
-Allow specifying Zregions where different Z_always_false are used to 
-determine the mask.
+Marching front algorithm to select points from a topo file based on
+various criteria.  See select_by_flooding docstring 
+
 """
 
 from __future__ import print_function
@@ -176,35 +173,5 @@ def select_by_flooding(Ztopo, mask=None, prev_pts_chosen=None,
 
     return pt_chosen
 
-
-def plot_masked_Z(topo, pt_chosen, ax=None, zmin=-10000., zmax=40.):
-    
-    import clawpack.visclaw.colormaps as colormaps
-
-
-    fgmax_mgrid = {}
-
-    land_cmap = colormaps.make_colormap({ 0.0:[0.1,0.4,0.0],
-                                         0.25:[0.0,1.0,0.0],
-                                          0.5:[0.8,1.0,0.5],
-                                          1.0:[0.8,0.5,0.2]})
-
-    sea_cmap = colormaps.make_colormap({ 0.0:[0,0,1], 1.:[.8,.8,1]})
-
-    cmap, norm = colormaps.add_colormaps((land_cmap, sea_cmap),
-                                         data_limits=(zmin,zmax),
-                                         data_break=0.)
-
-    mask = logical_not(pt_chosen)
-    Z = ma.masked_array(topo.Z, mask)
-    if ax is None:
-        figure()
-        ax = subplot(111)
-    pc = pcolormesh(topo.X, topo.Y, Z, cmap=cmap, norm=norm)
-    cb = colorbar(pc)
-    cb.set_label('meters')
-    gca().set_aspect(1./cos(48*pi/180.))
-    ticklabel_format(useOffset=False)
-    xticks(rotation=20)
     
     
