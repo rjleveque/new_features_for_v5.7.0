@@ -253,15 +253,18 @@ def regions2kml(rundata=None,fname='regions.kml',verbose=True,combined=True):
                 print("Created ",fname)
 
 
-    flagregions = rundata.flagregiondata.flagregions
+    try:
+        flagregions = rundata.flagregiondata.flagregions
+    except:
+        flagregions = []  # flagregions not yet in amrclaw
+
     if len(flagregions)==0 and verbose:
         print("No flagregions found in setrun.py")
-
 
     for rnum,flagregion in enumerate(flagregions):
         
         name = flagregion.name
-        print('+++ flagregion name = ',name)
+        #print('+++ flagregion name = ',name)
         
         if not combined:
             if name is '':
