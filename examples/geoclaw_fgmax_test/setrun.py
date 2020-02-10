@@ -412,7 +412,7 @@ def setrun(claw_pkg='geoclaw'):
     #                     5 to also save max hs,hss,hmin
     rundata.fgmax_data.num_fgmax_val = 2  # Save depth and speed
 
-    fgmax_list = rundata.fgmax_data.fgmax_list  # empty list to start
+    fgmax_grids = rundata.fgmax_data.fgmax_grids  # empty list to start
 
     # Now append to this list objects of class fgmax_tools.FGmaxGrid
     # specifying any fgmax grids.
@@ -433,7 +433,7 @@ def setrun(claw_pkg='geoclaw'):
     fg.tstart_max = tstart_max  # just before wave arrives
     fg.tend_max = 1.e10    # when to stop monitoring max values
     fg.dt_check = 20.      # how often to update max values
-    fgmax_list.append(fg)  # written to fgmax_new.data
+    fgmax_grids.append(fg)  # written to fgmax_new.data
 
     # Points on a 1d transect from (x1,y1) to (x2,y2):
     fg = fgmax_tools.FGmaxGrid()
@@ -447,7 +447,7 @@ def setrun(claw_pkg='geoclaw'):
     fg.tstart_max = tstart_max  # just before wave arrives
     fg.tend_max = 1.e10    # when to stop monitoring max values
     fg.dt_check = 20.      # how often to update max values
-    fgmax_list.append(fg)  # written to fgmax_new.data
+    fgmax_grids.append(fg)  # written to fgmax_new.data
 
     # fgmax grid point_style==4 means grid specified as topo_type==3 file:
     fg = fgmax_tools.FGmaxGrid()
@@ -457,7 +457,7 @@ def setrun(claw_pkg='geoclaw'):
     fg.tend_max = 1.e10    # when to stop monitoring max values
     fg.dt_check = 20.      # how often to update max values
     fg.xy_fname = 'fgmax_pts_island.data'  # file of 0/1 values in tt3 format
-    fgmax_list.append(fg)  # written to fgmax_new.data
+    fgmax_grids.append(fg)  # written to fgmax_new.data
 
     # fgmax grid point_style==0 means list of points:
     fg = fgmax_tools.FGmaxGrid()
@@ -470,7 +470,7 @@ def setrun(claw_pkg='geoclaw'):
     fg.npts = 2
     fg.X = np.array([14.4, 14.5])
     fg.Y = np.array([50.13, 50.13])
-    fgmax_list.append(fg)  # written to fgmax_new.data
+    fgmax_grids.append(fg)  # written to fgmax_new.data
 
     # fgmax grid point_style==0 means list of points:
     fg = fgmax_tools.FGmaxGrid()
@@ -482,7 +482,7 @@ def setrun(claw_pkg='geoclaw'):
     # can specify that list of points is in a different file:
     fg.npts = 0
     fg.xy_fname = 'fgmax_points_list.data'
-    fgmax_list.append(fg)  # written to fgmax_new.data
+    fgmax_grids.append(fg)  # written to fgmax_new.data
     
     #  ----- For developers ----- 
     # Toggle debugging print statements:

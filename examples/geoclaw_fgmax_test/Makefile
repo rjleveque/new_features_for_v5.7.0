@@ -71,12 +71,16 @@ SOURCES = \
 include $(CLAWMAKE)
 
 # Construct the topography data
-.PHONY: topo all
-topo:
-	python maketopo.py
+.PHONY: input all fgmax_plots
+
+input:
+	python make_input_files.py
+
+fgmax_plots:
+	python process_fgmax.py
 
 all: 
-	$(MAKE) topo
+	$(MAKE) input
 	$(MAKE) .plots
-	$(MAKE) .htmls
+	$(MAKE) fgmax_plots
 

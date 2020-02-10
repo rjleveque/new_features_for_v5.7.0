@@ -227,6 +227,55 @@ def setplot(plotdata):
     plotitem.amr_celledges_show = [1,1,0]   
     plotitem.amr_patchedges_show = [1]     
 
+
+
+    #-----------------------------------------
+    # Figures for fgmax plots
+    #-----------------------------------------
+    # Note: You need to move fgmax png files into _plots/fgmax_plots after
+    # creating them, e.g., by running the process_fgmax notebook or script.
+    # The lines below just create links to these figures from _PlotIndex.html
+
+    otherfigure = plotdata.new_otherfigure(name='max depth on fgmax grid 1',
+                    fname='fgmax_plots/fgmax0001_h_onshore.png')
+
+    otherfigure = plotdata.new_otherfigure(name='max speed on fgmax grid 1',
+                    fname='fgmax_plots/fgmax0001_speed.png')
+
+    otherfigure = plotdata.new_otherfigure(name='max elevation on fgmax grid 2',
+                    fname='fgmax_plots/fgmax0002_surface.png')
+
+    otherfigure = plotdata.new_otherfigure(name='max depth on fgmax grid 3',
+                    fname='fgmax_plots/fgmax0003_h_onshore.png')
+
+    otherfigure = plotdata.new_otherfigure(name='max speed on fgmax grid 3',
+                    fname='fgmax_plots/fgmax0003_speed.png')
+
+    # add additional lines for any other figures you want added to the index.    
+
+    #-----------------------------------------
+    # Plots of timing (CPU and wall time):
+
+    def make_timing_plots(plotdata):
+        import os
+        from clawpack.visclaw import plot_timing_stats
+        try:
+            timing_plotdir = plotdata.plotdir + '/timing_figures'
+            os.system('mkdir -p %s' % timing_plotdir)
+            units = {'comptime':'seconds', 'simtime':'hours', 'cell':'billions'}
+            plot_timing_stats.make_plots(outdir=plotdata.outdir, make_pngs=True,
+                                          plotdir=timing_plotdir, units=units)
+            os.system('cp %s/timing.* %s' % (plotdata.outdir, timing_plotdir))
+        except:
+            print('*** Error making timing plots')
+
+    # create a link to this webpage from _PlotIndex.html:
+    otherfigure = plotdata.new_otherfigure(name='timing',
+                    fname='timing_figures/timing.html')
+    otherfigure.makefig = make_timing_plots
+
+
+
     #-----------------------------------------
     
     # Parameters used only when creating html and/or latex hardcopy
